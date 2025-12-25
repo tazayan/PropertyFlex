@@ -195,7 +195,7 @@ bucket.DefineType("age", typeof(int));
 bucket.DefineType("username", typeof(string));
 
 bucket.Set("age", 30); // OK
-bucket.Set("age", "30"); // Throws ArgumentException or ValidationException
+bucket.Set("age", "30"); // Throws ArgumentException for type mismatch
 ```
 
 ### Immutable Properties
