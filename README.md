@@ -69,7 +69,11 @@ bucket.Remove("age");
 
 // Get all properties
 var allProperties = bucket.GetAll();
-Console.WriteLine(allProperties); // Output: { username: john_doe, preferences: {...} }
+// Note: To display dictionary contents, iterate or use JSON serialization
+foreach (var prop in allProperties)
+{
+    Console.WriteLine($"{prop.Key}: {prop.Value}");
+}
 ```
 
 ## API Reference
@@ -179,6 +183,8 @@ Console.WriteLine(bucket.Count); // Output: 3
 ### Type Validation
 
 ```csharp
+using PropertyFlex;
+
 var bucket = new PropertyFlex(new BucketOptions { Strict = true });
 
 // Define expected types
@@ -186,12 +192,14 @@ bucket.DefineType("age", typeof(int));
 bucket.DefineType("username", typeof(string));
 
 bucket.Set("age", 30); // OK
-bucket.Set("age", "30"); // Throws InvalidCastException
+bucket.Set("age", "30"); // Throws ArgumentException or ValidationException
 ```
 
 ### Immutable Properties
 
 ```csharp
+using PropertyFlex;
+
 var bucket = new PropertyFlex(new BucketOptions { Immutable = true });
 
 bucket.Set("apiKey", "secret-key-123");
@@ -201,6 +209,9 @@ bucket.Set("apiKey", "new-key"); // Throws InvalidOperationException: Property i
 ### Event Listeners
 
 ```csharp
+using PropertyFlex;
+using System;
+
 var bucket = new PropertyFlex();
 
 // Listen for property changes
@@ -220,6 +231,8 @@ bucket.Set("username", "jane_doe"); // Triggers OnSet event
 ### Chaining Operations
 
 ```csharp
+using PropertyFlex;
+
 var bucket = new PropertyFlex()
     .Set("name", "John")
     .Set("age", 30)
@@ -229,6 +242,9 @@ var bucket = new PropertyFlex()
 ### Batch Operations
 
 ```csharp
+using PropertyFlex;
+using System.Collections.Generic;
+
 // Set multiple properties at once
 bucket.SetMany(new Dictionary<string, object>
 {
@@ -311,6 +327,7 @@ Console.WriteLine(profile.ExportProfile());
 
 ```csharp
 using PropertyFlex;
+using System;
 using System.Collections.Generic;
 
 public class AppConfig
