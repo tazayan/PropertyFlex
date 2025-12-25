@@ -31,325 +31,395 @@ PropertyFlex is ideal for:
 ## Installation
 
 ```bash
-# Using npm
-npm install property-flex
+# Using .NET CLI
+dotnet add package PropertyFlex
 
-# Using yarn
-yarn add property-flex
+# Using Package Manager Console
+Install-Package PropertyFlex
 
-# Using pnpm
-pnpm add property-flex
+# Using PackageReference in .csproj
+<PackageReference Include="PropertyFlex" Version="1.0.0" />
 ```
 
 ## Quick Start
 
-```javascript
-import { PropertyFlex } from 'property-flex';
+```csharp
+using PropertyFlex;
 
 // Create a new PropertyFlex instance
-const bucket = new PropertyFlex();
+var bucket = new PropertyFlex();
 
 // Add properties at runtime
-bucket.set('username', 'john_doe');
-bucket.set('age', 30);
-bucket.set('preferences', { theme: 'dark', language: 'en' });
+bucket.Set("username", "john_doe");
+bucket.Set("age", 30);
+bucket.Set("preferences", new { Theme = "dark", Language = "en" });
 
 // Retrieve properties
-console.log(bucket.get('username')); // Output: john_doe
-console.log(bucket.get('age')); // Output: 30
+Console.WriteLine(bucket.Get("username")); // Output: john_doe
+Console.WriteLine(bucket.Get("age")); // Output: 30
 
 // Check if a property exists
-if (bucket.has('username')) {
-  console.log('Username is set');
+if (bucket.Has("username"))
+{
+    Console.WriteLine("Username is set");
 }
 
 // Remove a property
-bucket.remove('age');
+bucket.Remove("age");
 
 // Get all properties
-const allProperties = bucket.getAll();
-console.log(allProperties); // Output: { username: 'john_doe', preferences: {...} }
+var allProperties = bucket.GetAll();
+Console.WriteLine(allProperties); // Output: { username: john_doe, preferences: {...} }
 ```
 
 ## API Reference
 
 ### Constructor
 
-```javascript
-new PropertyFlex(options?: BucketOptions)
+```csharp
+new PropertyFlex(BucketOptions? options = null)
 ```
 
 Creates a new PropertyFlex instance with optional configuration.
 
 **Parameters:**
 - `options` (optional): Configuration object
-  - `strict`: Enable strict type checking (default: false)
-  - `immutable`: Make properties immutable after first set (default: false)
-  - `maxSize`: Maximum number of properties allowed (default: unlimited)
+  - `Strict`: Enable strict type checking (default: false)
+  - `Immutable`: Make properties immutable after first set (default: false)
+  - `MaxSize`: Maximum number of properties allowed (default: unlimited)
 
 ### Methods
 
-#### `set(key: string, value: any): PropertyFlex`
+#### `Set(string key, object value): PropertyFlex`
 
 Sets a property with the specified key and value.
 
-```javascript
-bucket.set('email', 'user@example.com');
+```csharp
+bucket.Set("email", "user@example.com");
 ```
 
-#### `get(key: string): any`
+#### `Get(string key): object`
 
 Retrieves the value of a property by key.
 
-```javascript
-const email = bucket.get('email');
+```csharp
+var email = bucket.Get("email");
 ```
 
-#### `has(key: string): boolean`
+#### `Get<T>(string key): T`
+
+Retrieves the value of a property by key with type casting.
+
+```csharp
+var age = bucket.Get<int>("age");
+var username = bucket.Get<string>("username");
+```
+
+#### `Has(string key): bool`
 
 Checks if a property exists in the bucket.
 
-```javascript
-if (bucket.has('email')) {
-  // Property exists
+```csharp
+if (bucket.Has("email"))
+{
+    // Property exists
 }
 ```
 
-#### `remove(key: string): boolean`
+#### `Remove(string key): bool`
 
 Removes a property from the bucket. Returns true if the property was removed, false if it didn't exist.
 
-```javascript
-bucket.remove('email');
+```csharp
+bucket.Remove("email");
 ```
 
-#### `getAll(): object`
+#### `GetAll(): Dictionary<string, object>`
 
-Returns all properties as a plain JavaScript object.
+Returns all properties as a dictionary.
 
-```javascript
-const allProps = bucket.getAll();
+```csharp
+var allProps = bucket.GetAll();
 ```
 
-#### `clear(): void`
+#### `Clear(): void`
 
 Removes all properties from the bucket.
 
-```javascript
-bucket.clear();
+```csharp
+bucket.Clear();
 ```
 
-#### `keys(): string[]`
+#### `Keys(): IEnumerable<string>`
 
-Returns an array of all property keys.
+Returns an enumerable of all property keys.
 
-```javascript
-const keys = bucket.keys(); // ['username', 'email', 'age']
+```csharp
+var keys = bucket.Keys(); // ["username", "email", "age"]
 ```
 
-#### `values(): any[]`
+#### `Values(): IEnumerable<object>`
 
-Returns an array of all property values.
+Returns an enumerable of all property values.
 
-```javascript
-const values = bucket.values();
+```csharp
+var values = bucket.Values();
 ```
 
-#### `size(): number`
+#### `Count: int`
 
-Returns the number of properties in the bucket.
+Gets the number of properties in the bucket.
 
-```javascript
-console.log(bucket.size()); // Output: 3
+```csharp
+Console.WriteLine(bucket.Count); // Output: 3
 ```
 
 ## Advanced Usage
 
 ### Type Validation
 
-```javascript
-const bucket = new PropertyFlex({ strict: true });
+```csharp
+var bucket = new PropertyFlex(new BucketOptions { Strict = true });
 
 // Define expected types
-bucket.defineType('age', 'number');
-bucket.defineType('username', 'string');
+bucket.DefineType("age", typeof(int));
+bucket.DefineType("username", typeof(string));
 
-bucket.set('age', 30); // OK
-bucket.set('age', '30'); // Throws TypeError
+bucket.Set("age", 30); // OK
+bucket.Set("age", "30"); // Throws InvalidCastException
 ```
 
 ### Immutable Properties
 
-```javascript
-const bucket = new PropertyFlex({ immutable: true });
+```csharp
+var bucket = new PropertyFlex(new BucketOptions { Immutable = true });
 
-bucket.set('apiKey', 'secret-key-123');
-bucket.set('apiKey', 'new-key'); // Throws Error: Property is immutable
+bucket.Set("apiKey", "secret-key-123");
+bucket.Set("apiKey", "new-key"); // Throws InvalidOperationException: Property is immutable
 ```
 
 ### Event Listeners
 
-```javascript
-const bucket = new PropertyFlex();
+```csharp
+var bucket = new PropertyFlex();
 
 // Listen for property changes
-bucket.on('set', (key, value) => {
-  console.log(`Property ${key} was set to ${value}`);
-});
+bucket.OnSet += (key, value) =>
+{
+    Console.WriteLine($"Property {key} was set to {value}");
+};
 
-bucket.on('remove', (key) => {
-  console.log(`Property ${key} was removed`);
-});
+bucket.OnRemove += (key) =>
+{
+    Console.WriteLine($"Property {key} was removed");
+};
 
-bucket.set('username', 'jane_doe'); // Triggers 'set' event
+bucket.Set("username", "jane_doe"); // Triggers OnSet event
 ```
 
 ### Chaining Operations
 
-```javascript
-const bucket = new PropertyFlex()
-  .set('name', 'John')
-  .set('age', 30)
-  .set('city', 'New York');
+```csharp
+var bucket = new PropertyFlex()
+    .Set("name", "John")
+    .Set("age", 30)
+    .Set("city", "New York");
 ```
 
 ### Batch Operations
 
-```javascript
+```csharp
 // Set multiple properties at once
-bucket.setMany({
-  username: 'john_doe',
-  email: 'john@example.com',
-  role: 'admin'
+bucket.SetMany(new Dictionary<string, object>
+{
+    { "username", "john_doe" },
+    { "email", "john@example.com" },
+    { "role", "admin" }
 });
 
 // Remove multiple properties
-bucket.removeMany(['age', 'city']);
+bucket.RemoveMany(new[] { "age", "city" });
 ```
 
 ## Examples
 
 ### Example 1: User Profile Manager
 
-```javascript
-import { PropertyFlex } from 'property-flex';
+```csharp
+using PropertyFlex;
+using System.Collections.Generic;
 
-class UserProfile {
-  constructor(userId) {
-    this.userId = userId;
-    this.properties = new PropertyFlex();
-  }
+public class UserProfile
+{
+    public string UserId { get; }
+    private PropertyFlex properties;
 
-  setPreference(key, value) {
-    this.properties.set(`pref_${key}`, value);
-  }
+    public UserProfile(string userId)
+    {
+        UserId = userId;
+        properties = new PropertyFlex();
+    }
 
-  getPreference(key) {
-    return this.properties.get(`pref_${key}`);
-  }
+    public void SetPreference(string key, object value)
+    {
+        properties.Set($"pref_{key}", value);
+    }
 
-  setMetadata(data) {
-    Object.entries(data).forEach(([key, value]) => {
-      this.properties.set(`meta_${key}`, value);
-    });
-  }
+    public object GetPreference(string key)
+    {
+        return properties.Get($"pref_{key}");
+    }
 
-  exportProfile() {
-    return {
-      userId: this.userId,
-      ...this.properties.getAll()
-    };
-  }
+    public void SetMetadata(Dictionary<string, object> data)
+    {
+        foreach (var kvp in data)
+        {
+            properties.Set($"meta_{kvp.Key}", kvp.Value);
+        }
+    }
+
+    public Dictionary<string, object> ExportProfile()
+    {
+        var profile = new Dictionary<string, object>
+        {
+            { "userId", UserId }
+        };
+        
+        foreach (var prop in properties.GetAll())
+        {
+            profile[prop.Key] = prop.Value;
+        }
+        
+        return profile;
+    }
 }
 
 // Usage
-const profile = new UserProfile('user123');
-profile.setPreference('theme', 'dark');
-profile.setPreference('notifications', true);
-profile.setMetadata({ lastLogin: new Date(), deviceType: 'mobile' });
+var profile = new UserProfile("user123");
+profile.SetPreference("theme", "dark");
+profile.SetPreference("notifications", true);
+profile.SetMetadata(new Dictionary<string, object>
+{
+    { "lastLogin", DateTime.Now },
+    { "deviceType", "mobile" }
+});
 
-console.log(profile.exportProfile());
+Console.WriteLine(profile.ExportProfile());
 ```
 
 ### Example 2: Dynamic Configuration
 
-```javascript
-import { PropertyFlex } from 'property-flex';
+```csharp
+using PropertyFlex;
+using System.Collections.Generic;
 
-class AppConfig {
-  constructor() {
-    this.config = new PropertyFlex();
-    this.loadDefaults();
-  }
+public class AppConfig
+{
+    private PropertyFlex config;
 
-  loadDefaults() {
-    this.config.setMany({
-      apiUrl: 'https://api.example.com',
-      timeout: 5000,
-      retries: 3
-    });
-  }
-
-  loadEnvironmentConfig(env) {
-    // Load environment-specific properties
-    if (env === 'production') {
-      this.config.set('debug', false);
-      this.config.set('apiUrl', 'https://prod-api.example.com');
-    } else if (env === 'development') {
-      this.config.set('debug', true);
-      this.config.set('apiUrl', 'http://localhost:3000');
+    public AppConfig()
+    {
+        config = new PropertyFlex();
+        LoadDefaults();
     }
-  }
 
-  get(key) {
-    return this.config.get(key);
-  }
+    private void LoadDefaults()
+    {
+        config.SetMany(new Dictionary<string, object>
+        {
+            { "apiUrl", "https://api.example.com" },
+            { "timeout", 5000 },
+            { "retries", 3 }
+        });
+    }
+
+    public void LoadEnvironmentConfig(string env)
+    {
+        // Load environment-specific properties
+        if (env == "production")
+        {
+            config.Set("debug", false);
+            config.Set("apiUrl", "https://prod-api.example.com");
+        }
+        else if (env == "development")
+        {
+            config.Set("debug", true);
+            config.Set("apiUrl", "http://localhost:3000");
+        }
+    }
+
+    public object Get(string key)
+    {
+        return config.Get(key);
+    }
+
+    public T Get<T>(string key)
+    {
+        return config.Get<T>(key);
+    }
 }
 
 // Usage
-const config = new AppConfig();
-config.loadEnvironmentConfig(process.env.NODE_ENV);
-console.log(config.get('apiUrl'));
+var config = new AppConfig();
+config.LoadEnvironmentConfig(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "development");
+Console.WriteLine(config.Get("apiUrl"));
 ```
 
 ### Example 3: Plugin System
 
-```javascript
-import { PropertyFlex } from 'property-flex';
+```csharp
+using PropertyFlex;
+using System.Collections.Generic;
 
-class PluginManager {
-  constructor() {
-    this.plugins = new Map();
-  }
+public interface IPlugin
+{
+    void Register(PropertyFlex bucket);
+}
 
-  registerPlugin(pluginName, plugin) {
-    const pluginBucket = new PropertyFlex();
-    
-    // Allow plugin to register its properties
-    plugin.register(pluginBucket);
-    
-    this.plugins.set(pluginName, pluginBucket);
-  }
+public class PluginManager
+{
+    private Dictionary<string, PropertyFlex> plugins;
 
-  getPluginProperty(pluginName, property) {
-    const plugin = this.plugins.get(pluginName);
-    return plugin ? plugin.get(property) : undefined;
-  }
+    public PluginManager()
+    {
+        plugins = new Dictionary<string, PropertyFlex>();
+    }
+
+    public void RegisterPlugin(string pluginName, IPlugin plugin)
+    {
+        var pluginBucket = new PropertyFlex();
+        
+        // Allow plugin to register its properties
+        plugin.Register(pluginBucket);
+        
+        plugins[pluginName] = pluginBucket;
+    }
+
+    public object GetPluginProperty(string pluginName, string property)
+    {
+        if (plugins.TryGetValue(pluginName, out var plugin))
+        {
+            return plugin.Get(property);
+        }
+        return null;
+    }
 }
 
 // Usage
-const manager = new PluginManager();
+var manager = new PluginManager();
 
-const myPlugin = {
-  register(bucket) {
-    bucket.set('version', '1.0.0');
-    bucket.set('enabled', true);
-    bucket.set('settings', { maxConnections: 10 });
-  }
-};
+public class MyPlugin : IPlugin
+{
+    public void Register(PropertyFlex bucket)
+    {
+        bucket.Set("version", "1.0.0");
+        bucket.Set("enabled", true);
+        bucket.Set("settings", new { MaxConnections = 10 });
+    }
+}
 
-manager.registerPlugin('myPlugin', myPlugin);
-console.log(manager.getPluginProperty('myPlugin', 'version')); // '1.0.0'
+manager.RegisterPlugin("myPlugin", new MyPlugin());
+Console.WriteLine(manager.GetPluginProperty("myPlugin", "version")); // "1.0.0"
 ```
 
 ## Best Practices
@@ -367,16 +437,17 @@ console.log(manager.getPluginProperty('myPlugin', 'version')); // '1.0.0'
 - PropertyFlex uses efficient internal storage mechanisms
 - Property access is O(1) for get/set operations
 - Memory usage scales linearly with the number of properties
-- Consider using `maxSize` option for memory-constrained environments
+- Consider using `MaxSize` option for memory-constrained environments
 - Batch operations are more efficient than individual calls
 
-## Browser and Node.js Support
+## .NET Framework and .NET Core Support
 
-PropertyFlex works in both browser and Node.js environments:
+PropertyFlex supports multiple .NET platforms:
 
-- **Node.js**: 12.x and above
-- **Browsers**: All modern browsers (ES6+ support required)
-- **TypeScript**: Full TypeScript support with type definitions included
+- **.NET Framework**: 4.6.1 and above
+- **.NET Core**: 3.1 and above
+- **.NET 5+**: Full support for .NET 5, 6, 7, and 8
+- **Platforms**: Windows, Linux, macOS
 
 ## Contributing
 
@@ -389,30 +460,30 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 git clone https://github.com/tazayan/PropertyFlex.git
 cd PropertyFlex
 
-# Install dependencies
-npm install
-
-# Run tests
-npm test
+# Restore dependencies
+dotnet restore
 
 # Build the project
-npm run build
+dotnet build
 
-# Run linter
-npm run lint
+# Run tests
+dotnet test
+
+# Create NuGet package
+dotnet pack
 ```
 
 ## Testing
 
 ```bash
 # Run all tests
-npm test
+dotnet test
 
-# Run tests in watch mode
-npm run test:watch
+# Run tests with detailed output
+dotnet test --verbosity normal
 
 # Run tests with coverage
-npm run test:coverage
+dotnet test --collect:"XPlat Code Coverage"
 ```
 
 ## License
