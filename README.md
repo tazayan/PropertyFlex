@@ -1,10 +1,10 @@
-# PropertyBucket
+# PropertyFlex
 
 A flexible, dynamic property container that supports a variable number of properties specified at runtime.
 
 ## Overview
 
-PropertyBucket is a lightweight library designed to provide a type-safe and flexible way to manage dynamic properties. Unlike traditional static objects where properties must be defined at compile time, PropertyBucket allows you to add, remove, and manage properties during runtime, making it perfect for scenarios where the structure of your data isn't known until the application is running.
+PropertyFlex is a lightweight library designed to provide a type-safe and flexible way to manage dynamic properties. Unlike traditional static objects where properties must be defined at compile time, PropertyFlex allows you to add, remove, and manage properties during runtime, making it perfect for scenarios where the structure of your data isn't known until the application is running.
 
 ## Features
 
@@ -18,7 +18,7 @@ PropertyBucket is a lightweight library designed to provide a type-safe and flex
 
 ## Use Cases
 
-PropertyBucket is ideal for:
+PropertyFlex is ideal for:
 
 - **Configuration Management**: Handle application settings that vary by environment or user
 - **Dynamic Forms**: Build forms where fields are determined at runtime
@@ -32,22 +32,22 @@ PropertyBucket is ideal for:
 
 ```bash
 # Using npm
-npm install property-bucket
+npm install property-flex
 
 # Using yarn
-yarn add property-bucket
+yarn add property-flex
 
 # Using pnpm
-pnpm add property-bucket
+pnpm add property-flex
 ```
 
 ## Quick Start
 
 ```javascript
-import { PropertyBucket } from 'property-bucket';
+import { PropertyFlex } from 'property-flex';
 
-// Create a new PropertyBucket instance
-const bucket = new PropertyBucket();
+// Create a new PropertyFlex instance
+const bucket = new PropertyFlex();
 
 // Add properties at runtime
 bucket.set('username', 'john_doe');
@@ -76,10 +76,10 @@ console.log(allProperties); // Output: { username: 'john_doe', preferences: {...
 ### Constructor
 
 ```javascript
-new PropertyBucket(options?: BucketOptions)
+new PropertyFlex(options?: BucketOptions)
 ```
 
-Creates a new PropertyBucket instance with optional configuration.
+Creates a new PropertyFlex instance with optional configuration.
 
 **Parameters:**
 - `options` (optional): Configuration object
@@ -89,7 +89,7 @@ Creates a new PropertyBucket instance with optional configuration.
 
 ### Methods
 
-#### `set(key: string, value: any): PropertyBucket`
+#### `set(key: string, value: any): PropertyFlex`
 
 Sets a property with the specified key and value.
 
@@ -168,7 +168,7 @@ console.log(bucket.size()); // Output: 3
 ### Type Validation
 
 ```javascript
-const bucket = new PropertyBucket({ strict: true });
+const bucket = new PropertyFlex({ strict: true });
 
 // Define expected types
 bucket.defineType('age', 'number');
@@ -181,7 +181,7 @@ bucket.set('age', '30'); // Throws TypeError
 ### Immutable Properties
 
 ```javascript
-const bucket = new PropertyBucket({ immutable: true });
+const bucket = new PropertyFlex({ immutable: true });
 
 bucket.set('apiKey', 'secret-key-123');
 bucket.set('apiKey', 'new-key'); // Throws Error: Property is immutable
@@ -190,7 +190,7 @@ bucket.set('apiKey', 'new-key'); // Throws Error: Property is immutable
 ### Event Listeners
 
 ```javascript
-const bucket = new PropertyBucket();
+const bucket = new PropertyFlex();
 
 // Listen for property changes
 bucket.on('set', (key, value) => {
@@ -207,7 +207,7 @@ bucket.set('username', 'jane_doe'); // Triggers 'set' event
 ### Chaining Operations
 
 ```javascript
-const bucket = new PropertyBucket()
+const bucket = new PropertyFlex()
   .set('name', 'John')
   .set('age', 30)
   .set('city', 'New York');
@@ -232,12 +232,12 @@ bucket.removeMany(['age', 'city']);
 ### Example 1: User Profile Manager
 
 ```javascript
-import { PropertyBucket } from 'property-bucket';
+import { PropertyFlex } from 'property-flex';
 
 class UserProfile {
   constructor(userId) {
     this.userId = userId;
-    this.properties = new PropertyBucket();
+    this.properties = new PropertyFlex();
   }
 
   setPreference(key, value) {
@@ -274,11 +274,11 @@ console.log(profile.exportProfile());
 ### Example 2: Dynamic Configuration
 
 ```javascript
-import { PropertyBucket } from 'property-bucket';
+import { PropertyFlex } from 'property-flex';
 
 class AppConfig {
   constructor() {
-    this.config = new PropertyBucket();
+    this.config = new PropertyFlex();
     this.loadDefaults();
   }
 
@@ -315,7 +315,7 @@ console.log(config.get('apiUrl'));
 ### Example 3: Plugin System
 
 ```javascript
-import { PropertyBucket } from 'property-bucket';
+import { PropertyFlex } from 'property-flex';
 
 class PluginManager {
   constructor() {
@@ -323,7 +323,7 @@ class PluginManager {
   }
 
   registerPlugin(pluginName, plugin) {
-    const pluginBucket = new PropertyBucket();
+    const pluginBucket = new PropertyFlex();
     
     // Allow plugin to register its properties
     plugin.register(pluginBucket);
@@ -364,7 +364,7 @@ console.log(manager.getPluginProperty('myPlugin', 'version')); // '1.0.0'
 
 ## Performance Considerations
 
-- PropertyBucket uses efficient internal storage mechanisms
+- PropertyFlex uses efficient internal storage mechanisms
 - Property access is O(1) for get/set operations
 - Memory usage scales linearly with the number of properties
 - Consider using `maxSize` option for memory-constrained environments
@@ -372,7 +372,7 @@ console.log(manager.getPluginProperty('myPlugin', 'version')); // '1.0.0'
 
 ## Browser and Node.js Support
 
-PropertyBucket works in both browser and Node.js environments:
+PropertyFlex works in both browser and Node.js environments:
 
 - **Node.js**: 12.x and above
 - **Browsers**: All modern browsers (ES6+ support required)
@@ -386,8 +386,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ```bash
 # Clone the repository
-git clone https://github.com/tazayan/PropertyBucket.git
-cd PropertyBucket
+git clone https://github.com/tazayan/PropertyFlex.git
+cd PropertyFlex
 
 # Install dependencies
 npm install
@@ -421,9 +421,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- **Documentation**: [https://github.com/tazayan/PropertyBucket/wiki](https://github.com/tazayan/PropertyBucket/wiki)
-- **Issue Tracker**: [https://github.com/tazayan/PropertyBucket/issues](https://github.com/tazayan/PropertyBucket/issues)
-- **Discussions**: [https://github.com/tazayan/PropertyBucket/discussions](https://github.com/tazayan/PropertyBucket/discussions)
+- **Documentation**: [https://github.com/tazayan/PropertyFlex/wiki](https://github.com/tazayan/PropertyFlex/wiki)
+- **Issue Tracker**: [https://github.com/tazayan/PropertyFlex/issues](https://github.com/tazayan/PropertyFlex/issues)
+- **Discussions**: [https://github.com/tazayan/PropertyFlex/discussions](https://github.com/tazayan/PropertyFlex/discussions)
 
 ## Roadmap
 
@@ -441,8 +441,8 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
 
 ## Acknowledgments
 
-Special thanks to all contributors who have helped make PropertyBucket better!
+Special thanks to all contributors who have helped make PropertyFlex better!
 
 ---
 
-Made with ❤️ by the PropertyBucket team
+Made with ❤️ by the PropertyFlex team
