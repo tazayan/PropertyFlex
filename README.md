@@ -45,6 +45,7 @@ Install-Package PropertyFlex
 
 ```csharp
 using PropertyFlex;
+using System;
 
 // Create a new PropertyFlex instance
 var bucket = new PropertyFlex();
@@ -175,6 +176,8 @@ var values = bucket.Values();
 Gets the number of properties in the bucket.
 
 ```csharp
+using System;
+
 Console.WriteLine(bucket.Count); // Output: 3
 ```
 
@@ -263,6 +266,7 @@ bucket.RemoveMany(new[] { "age", "city" });
 
 ```csharp
 using PropertyFlex;
+using System;
 using System.Collections.Generic;
 
 public class UserProfile
@@ -386,6 +390,7 @@ Console.WriteLine(config.Get("apiUrl"));
 
 ```csharp
 using PropertyFlex;
+using System;
 using System.Collections.Generic;
 
 public interface IPlugin
