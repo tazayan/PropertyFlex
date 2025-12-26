@@ -1,0 +1,44 @@
+﻿root = true # Marks this .editorconfig as the root so higher-level settings are ignored
+
+[*.cs] # Applies the following rules to all C# files
+indent_style = space # Use spaces instead of tabs
+indent_size = 4 # Each indentation level uses 4 spaces
+trim_trailing_whitespace = true # Remove trailing whitespace on save
+insert_final_newline = true # Ensure files end with a newline
+charset = utf-8-bom # Use UTF-8 with BOM encoding
+
+# Language style
+dotnet_style_qualification_for_field = true:warning # Require 'this' keyword for field access
+csharp_style_var_for_built_in_types = true:suggestion # Prefer 'var' for built-in types (suggestion severity)
+csharp_style_var_when_type_is_apparent = true:suggestion # Prefer 'var' when the type is obvious (suggestion)
+csharp_style_var_elsewhere = false:suggestion # Prefer explicit types elsewhere (suggestion)
+csharp_prefer_braces = true:warning # Require braces around control blocks (warning)
+csharp_prefer_expression_bodies_methods = when_on_single_line:suggestion # Use expression-bodied methods when on one line (suggestion)
+csharp_style_namespace_declarations = file_scoped:warning # Prefer file-scoped namespaces (warning)
+dotnet_style_namespace_match_folder = false:suggestion # Prefer namespace naming to match folder structure (suggestion)
+csharp_style_prefer_switch_expression = true:suggestion # Prefer switch expressions when appropriate (suggestion)
+
+# Member ordering (requires StyleCop.Analyzers package)
+dotnet_diagnostic.SA1203.severity = warning # Constants must appear before fields
+dotnet_diagnostic.SA1204.severity = warning # Static members must appear before instance members
+dotnet_diagnostic.SA1214.severity = warning # Readonly fields must appear before non-readonly fields
+dotnet_diagnostic.SA1201.severity = warning # Elements must appear in the correct order (fields, constructors, properties, methods, nested types)
+dotnet_diagnostic.SA1202.severity = warning # Elements must be ordered by access (public → internal → protected → private)
+
+# Naming (requires StyleCop.Analyzers package)
+dotnet_diagnostic.SA1306.severity = warning # Field names must begin with lower-case letter (camelCase)
+dotnet_diagnostic.SA1303.severity = warning # Const field names must begin with upper-case letter (PascalCase)
+dotnet_diagnostic.SA1309.severity = warning # Field names must not begin with underscore
+
+# Formatting
+csharp_new_line_before_open_brace = all # Place opening braces on a new line for all constructs
+csharp_indent_case_contents = true # Indent contents of switch cases
+csharp_indent_switch_labels = true # Indent switch labels relative to the switch block
+csharp_space_after_keywords_in_control_flow_statements = true # Add a space after control-flow keywords
+dotnet_sort_system_directives_first = true # Place 'System' using directives first
+dotnet_separate_import_directive_groups = true # Separate using directive groups with blank lines
+
+# Analyzer severities
+dotnet_analyzer_diagnostic.severity = error # Treat analyzer diagnostics as errors
+# Retain explicit overrides as needed
+dotnet_diagnostic.IDE0005.severity = error # Treat unused using directives as errors
