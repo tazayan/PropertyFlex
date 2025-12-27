@@ -1,4 +1,4 @@
-﻿namespace PropertyFlexLib;
+﻿namespace FlexLib;
 
 public class ValueComparer
 {

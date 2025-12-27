@@ -1,8 +1,8 @@
-﻿namespace PropertyFlexLib;
+﻿namespace FlexLib;
 
-public interface IPropertyInfo
+public interface IFlexProperty
 {
-    PropertyId Id { get; }
+    FlexPropertyId Id { get; }
 
     Type PropertyType { get; }
 
