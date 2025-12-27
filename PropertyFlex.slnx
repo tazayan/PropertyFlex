@@ -4,4 +4,5 @@
     <File Path="Directory.Build.props" />
   </Folder>
   <Project Path="src/PropertyFlex/PropertyFlex.csproj" />
+  <Project Path="tests/PropertyFlex.Tests/PropertyFlex.Tests.csproj" />
 </Solution>

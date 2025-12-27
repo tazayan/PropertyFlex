@@ -7,3 +7,5 @@
 /src/PropertyFlex/.vs
 /src/PropertyFlex/obj
 /src/PropertyFlex/bin/Debug/net10.0
+/tests/PropertyFlex.Tests/bin/Debug/net10.0
+/tests/PropertyFlex.Tests/obj
