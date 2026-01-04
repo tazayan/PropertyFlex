@@ -4,5 +4,13 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
+	<!-- Disable analyzers for test and benchmark projects -->
+	<PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests')) Or 
+                            $(MSBuildProjectName.EndsWith('.Benchmarks'))">
+		<EnableNETAnalyzers>false</EnableNETAnalyzers>
+		<EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	</PropertyGroup>
 </Project>

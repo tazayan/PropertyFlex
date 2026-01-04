@@ -2,7 +2,9 @@
   <Folder Name="/SolutionItems/">
     <File Path=".editorconfig" />
     <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
   </Folder>
+  <Project Path="benchmarks/PropertyFlex.Benchmarks/PropertyFlex.Benchmarks.csproj" Id="248b2543-a7ee-4d8e-ad80-53595df157ca" />
   <Project Path="src/PropertyFlex/PropertyFlex.csproj" />
   <Project Path="tests/PropertyFlex.Tests/PropertyFlex.Tests.csproj" />
 </Solution>

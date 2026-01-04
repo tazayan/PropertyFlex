@@ -4,4 +4,9 @@
 	<DefaultNamespace>PropertyFlexLib</DefaultNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="PropertyFlex.Tests" />
+    <InternalsVisibleTo Include="PropertyFlex.Benchmarks" />
+  </ItemGroup>
+
 </Project>

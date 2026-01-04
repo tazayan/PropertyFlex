@@ -10,20 +10,20 @@
 
   <ItemGroup>
     <!-- XUnit v3 - Latest version with modern features -->
-    <PackageReference Include="xunit.v3" Version="1.*" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.*">
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     
     <!-- Required for running tests -->
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.*" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
     
     <!-- FluentAssertions for more readable and expressive assertions -->
-    <PackageReference Include="FluentAssertions" Version="8.*" />
+    <PackageReference Include="FluentAssertions" />
     
     <!-- Coverlet for code coverage -->
-    <PackageReference Include="coverlet.collector" Version="6.*">
+    <PackageReference Include="coverlet.collector">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
