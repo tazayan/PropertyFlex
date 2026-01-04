@@ -36,7 +36,7 @@ public abstract class Flex : IFlex
     protected abstract T SetValue<T>(uint index, T value) where T : allows ref struct;
 
 
-    ValueContainer IFlex.GetValue(FlexPropertyId propertyId) => this.GetValue<ValueContainer>(propertyId);
+    ValueContainer IFlex.GetValue(FlexPropertyId propertyId) => GetValue<ValueContainer>(propertyId);
 
-    ValueContainer IFlex.SetValue(FlexPropertyId propertyId, ValueContainer value) => this.SetValue<ValueContainer>(propertyId, value);
+    ValueContainer IFlex.SetValue(FlexPropertyId propertyId, ValueContainer value) => SetValue<ValueContainer>(propertyId, value);
 }

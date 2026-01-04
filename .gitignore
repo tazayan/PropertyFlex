@@ -9,3 +9,5 @@
 /src/PropertyFlex/bin/Debug/net10.0
 /tests/PropertyFlex.Tests/bin/Debug/net10.0
 /tests/PropertyFlex.Tests/obj
+/benchmarks/PropertyFlex.Benchmarks/bin/Debug/net10.0
+/benchmarks/PropertyFlex.Benchmarks/obj

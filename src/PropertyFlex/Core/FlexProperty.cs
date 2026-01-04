@@ -1,6 +1,4 @@
-﻿
-
-namespace FlexLib;
+﻿namespace FlexLib;
 
 public class FlexProperty : IFlexProperty
 {
